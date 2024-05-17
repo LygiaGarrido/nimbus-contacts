@@ -109,4 +109,18 @@ class Utils {
           );
         });
   }
+
+  static Widget showLoading() {
+    return Container(
+      alignment: Alignment.center,
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: CircularProgressIndicator(
+          backgroundColor: appBackgroundColor,
+          strokeWidth: 4,
+          valueColor: AlwaysStoppedAnimation<Color>(appPrimaryColor),
+        ),
+      ),
+    );
+  }
 }
