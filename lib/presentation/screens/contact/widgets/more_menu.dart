@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
+import '../texts/contact_texts.dart';
+
 class MoreMenu extends StatelessWidget {
   const MoreMenu({super.key, required this.onPressed});
   final void Function() onPressed;
@@ -13,7 +15,7 @@ class MoreMenu extends StatelessWidget {
         MenuItemButton(
           onPressed: onPressed,
           child: Text(
-            'delete',
+            deleteBtnText,
             style: TextStyle(color: appErrorColor, fontSize: 16),
           ),
         ),

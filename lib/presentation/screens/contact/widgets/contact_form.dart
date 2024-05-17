@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
+import '../texts/contact_texts.dart';
+
 class ContactForm extends StatelessWidget {
   const ContactForm({
     super.key,
@@ -85,7 +87,7 @@ class ContactForm extends StatelessWidget {
                         onPressed: () {
                           onPressedEdit();
                         },
-                        child: const Text('Cancel'),
+                        child: const Text(cancelBtnText),
                       ),
                 const SizedBox(
                   width: 10,
@@ -98,7 +100,7 @@ class ContactForm extends StatelessWidget {
                         ),
                         onPressed: onPressedSave,
                         child: const Text(
-                          'Save',
+                          saveBtnText,
                           style:
                               TextStyle(fontSize: 16, color: appPrimaryColor),
                         ),
@@ -109,7 +111,7 @@ class ContactForm extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Edit',
+                              editBtnText,
                               style: TextStyle(fontSize: 16),
                             ),
                             SizedBox(

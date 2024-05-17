@@ -27,8 +27,10 @@ class ContactCubit extends Cubit<ContactState> {
       emit(ContactLoadingState());
       Contact contact =
           await contactRepository.updateContactById(contactToUpdate);
+      emit(ContactUpdatedSuccessState());
       emit(ContactLoadedState(contact));
     } catch (e) {
+      emit(ContactUpdatedErrorState());
       emit(ContactErrorState());
     }
   }
