@@ -72,40 +72,42 @@ class _ContactScreenState extends State<ContactScreen> {
                 ),
                 body: Container(
                   alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: CircleAvatar(
-                          backgroundColor: appSecondaryContainerColor,
-                          radius: 50,
-                          child: Text(
-                            state.contact.name[0].toUpperCase(),
-                            style: const TextStyle(fontSize: 40),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: CircleAvatar(
+                            backgroundColor: appSecondaryContainerColor,
+                            radius: 50,
+                            child: Text(
+                              state.contact.name[0].toUpperCase(),
+                              style: const TextStyle(fontSize: 40),
+                            ),
                           ),
                         ),
-                      ),
-                      ContactForm(
-                        isReadOnly: isReadOnly,
-                        nameController: nameController,
-                        phoneNumberController: phoneNumberController,
-                        emailController: emailController,
-                        onPressedEdit: () => toggleIsReadOnly(),
-                        onPressedSave: () {
-                          Contact contactToUpdate = Contact(
-                              contact.id,
-                              nameController.text,
-                              emailController.text,
-                              phoneNumberController.text);
+                        ContactForm(
+                          isReadOnly: isReadOnly,
+                          nameController: nameController,
+                          phoneNumberController: phoneNumberController,
+                          emailController: emailController,
+                          onPressedEdit: () => toggleIsReadOnly(),
+                          onPressedSave: () {
+                            Contact contactToUpdate = Contact(
+                                contact.id,
+                                nameController.text,
+                                emailController.text,
+                                phoneNumberController.text);
 
-                          toggleIsReadOnly();
+                            toggleIsReadOnly();
 
-                          contactCubit.updateContactById(contactToUpdate);
-                        },
-                        onPressedCancel: () => toggleIsReadOnly(),
-                      ),
-                    ],
+                            contactCubit.updateContactById(contactToUpdate);
+                          },
+                          onPressedCancel: () => toggleIsReadOnly(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

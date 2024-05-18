@@ -32,7 +32,7 @@ class _LoginFormState extends State<LoginForm> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height / 2.4,
+      height: height / 3,
       width: width / 1.2,
       decoration: const BoxDecoration(
         color: appBackgroundColor,
@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
                   FocusScope.of(context).requestFocus(passwordFocusNode);
                 },
                 decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 3),
+                  contentPadding: EdgeInsets.zero,
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: appPrimaryColor),
                   ),
@@ -88,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 3),
+                  contentPadding: EdgeInsets.zero,
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: appPrimaryColor),
                   ),
@@ -106,7 +106,8 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               SizedBox(
-                height: height / 10,
+                // height: 30,
+                height: height < 670 ? 10 : height / 20,
               ),
               ElevatedButton(
                   onPressed: widget.onSendButtonPressed,
