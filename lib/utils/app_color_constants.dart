@@ -7,3 +7,5 @@ const Color appBackgroundColor = Color(0xFFF9F9FA);
 Color appErrorColor = ColorScheme.fromSeed(seedColor: appPrimaryColor).error;
 Color appSecondaryContainerColor =
     ColorScheme.fromSeed(seedColor: appPrimaryColor).secondaryContainer;
+Color appSecondaryColor =
+    ColorScheme.fromSeed(seedColor: appPrimaryColor).secondary;

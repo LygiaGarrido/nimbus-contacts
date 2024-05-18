@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nimbus_contacts/presentation/screens/home/texts/home_texts.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
 import '../../../../data/models/contact_model.dart';
@@ -17,10 +18,9 @@ class ContactListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor:
-            ColorScheme.fromSeed(seedColor: appPrimaryColor).secondary,
+        backgroundColor: appSecondaryColor,
         child: Text(
-          title[0].toUpperCase(),
+          title == emptyContactText ? '!' : title[0].toUpperCase(),
           style: const TextStyle(color: appYellowColor),
         ),
       ),

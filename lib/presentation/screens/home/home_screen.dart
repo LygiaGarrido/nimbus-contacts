@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Contact> allItems = [];
   List<Contact> items = [];
   final TextEditingController searchController = TextEditingController();
+  final Contact emptyContact = Contact('', emptyContactText, '', '');
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
               allContactsList: allItems,
               searchedItemList: items.isEmpty ? allItems : items,
               onContactTap: (value) {
-                BlocProvider.of<ContactCubit>(context).setContact(value);
-                Navigator.pushNamed(context, '/contact');
+                if (value != emptyContact) {
+                  BlocProvider.of<ContactCubit>(context).setContact(value);
+                  Navigator.pushNamed(context, '/contact');
+                }
               },
             ),
             floatingActionButton: FloatingActionButton(
@@ -75,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
         items = allItems
             .where((e) => e.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
+        if (items.isEmpty) {
+          items.add(emptyContact);
+        }
       });
     }
   }
