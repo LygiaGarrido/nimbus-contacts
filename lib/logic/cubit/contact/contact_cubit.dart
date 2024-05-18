@@ -8,14 +8,14 @@ import '../../../data/repositories/contact_repository.dart';
 class ContactCubit extends Cubit<ContactState> {
   ContactCubit() : super(ContactInitialState());
 
+  ContactRepository contactRepository = ContactRepository();
+
   @override
   void onChange(Change<ContactState> change) {
     debugPrint('from: ${change.currentState}');
     debugPrint('to: ${change.nextState}');
     super.onChange(change);
   }
-
-  ContactRepository contactRepository = ContactRepository();
 
   void setContact(Contact contact) {
     emit(ContactLoadingState());
@@ -25,6 +25,8 @@ class ContactCubit extends Cubit<ContactState> {
   void updateContactById(Contact contactToUpdate) async {
     try {
       emit(ContactLoadingState());
+      contactToUpdate.name = contactToUpdate.name.trim()[0].toUpperCase() +
+          contactToUpdate.name.substring(1);
       Contact contact =
           await contactRepository.updateContactById(contactToUpdate);
       emit(ContactUpdatedSuccessState());
@@ -32,6 +34,19 @@ class ContactCubit extends Cubit<ContactState> {
     } catch (e) {
       emit(ContactUpdatedErrorState());
       emit(ContactErrorState());
+    }
+  }
+
+  void addNewContact(Contact newContact) async {
+    try {
+      emit(ContactLoadingState());
+      newContact.name = newContact.name.trim()[0].toUpperCase() +
+          newContact.name.substring(1);
+      await contactRepository.addNewContact(newContact);
+      emit(ContactCreatedSuccessState());
+    } catch (e) {
+      print(e);
+      emit(ContactCreatedErrorState());
     }
   }
 }

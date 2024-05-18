@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nimbus_contacts/data/models/contact_model.dart';
+import 'package:nimbus_contacts/data/repositories/user_repository.dart';
 
 class ContactDataProvider {
   CollectionReference contactsRef =
@@ -40,6 +41,21 @@ class ContactDataProvider {
       var updatedDocData = documentSnapshot.data();
 
       return updatedDocData;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future addNewContact(Contact contact) async {
+    try {
+      await contactsRef.add({
+        'name': contact.name,
+        'phoneNumber': contact.phoneNumber,
+        'email': contact.email,
+        'uid': UserRepository.user.uid
+      });
+
+      print('contact created successfully');
     } catch (e) {
       rethrow;
     }

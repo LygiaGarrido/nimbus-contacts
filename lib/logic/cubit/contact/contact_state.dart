@@ -31,6 +31,16 @@ class ContactUpdatedErrorState extends ContactState {
   List<Object> get props => [];
 }
 
+class ContactCreatedSuccessState extends ContactState {
+  @override
+  List<Object> get props => [];
+}
+
+class ContactCreatedErrorState extends ContactState {
+  @override
+  List<Object> get props => [];
+}
+
 class ContactErrorState extends ContactState {
   @override
   List<Object> get props => [];
