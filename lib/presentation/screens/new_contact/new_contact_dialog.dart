@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimbus_contacts/data/models/contact_model.dart';
-import 'package:nimbus_contacts/data/repositories/contact_repository.dart';
 import 'package:nimbus_contacts/data/repositories/user_repository.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_list_cubit.dart';
 import 'package:nimbus_contacts/presentation/screens/new_contact/widgets/new_contact_form.dart';
