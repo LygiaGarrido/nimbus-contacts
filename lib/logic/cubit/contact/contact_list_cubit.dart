@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nimbus_contacts/data/repositories/contact_repository.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_list_state.dart';
 
 import '../../../data/models/contact_model.dart';
+import '../../../data/repositories/contact_list_repository.dart';
 
 class ContactListCubit extends Cubit<ContactListState> {
   ContactListCubit() : super(ContactListInitialState());
@@ -14,12 +14,13 @@ class ContactListCubit extends Cubit<ContactListState> {
     super.onChange(change);
   }
 
-  ContactRepository contactRepository = ContactRepository();
+  ContactListRepository contactListRepository = ContactListRepository();
 
   getAllContacts(String userUid) async {
     try {
       emit(ContactListLoadingState());
-      List<Contact> contacts = await contactRepository.getAllContacts(userUid);
+      List<Contact> contacts =
+          await contactListRepository.getAllContacts(userUid);
       emit(ContactListLoadedState(contacts));
     } catch (e) {
       emit(ContactListErrorState());
