@@ -7,6 +7,7 @@ import 'package:nimbus_contacts/presentation/screens/contact/texts/contact_texts
 import 'package:nimbus_contacts/presentation/screens/contact/widgets/contact_form.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/widgets/more_menu.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/utils/path_constants.dart';
 
 import '../../../utils/utils.dart';
 
@@ -20,10 +21,14 @@ class ContactScreen extends StatefulWidget {
 class _ContactScreenState extends State<ContactScreen> {
   bool isReadOnly = true;
   FocusNode nameFocusNode = FocusNode();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void toggleIsReadOnly() {
     setState(() {
       isReadOnly = !isReadOnly;
+      if (isReadOnly) {
+        formKey.currentState!.reset();
+      }
     });
   }
 
@@ -31,15 +36,36 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     ContactCubit contactCubit = BlocProvider.of<ContactCubit>(context);
 
+    void onTapDelete(String contactId) {
+      Utils.showConfirmationDialog(
+        context: context,
+        icon: Icons.warning_amber_outlined,
+        confirmationTitle: deleteDialogTitle,
+        confirmationDescription: deleteDialogDescription,
+        onTapConfirm: () {
+          contactCubit.deleteContactById(contactId);
+          Navigator.pop(context);
+        },
+      );
+    }
+
     return Dialog.fullscreen(
       child: BlocListener<ContactCubit, ContactState>(
         listener: (context, state) {
+          ScaffoldMessenger.of(context).clearSnackBars();
           if (state is ContactUpdatedSuccessState) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(Utils.showCustomSnackBar(toastSuccessMessage));
+            ScaffoldMessenger.of(context).showSnackBar(
+                Utils.showCustomSnackBar(snackBarUpdateSuccessMessage));
           } else if (state is ContactUpdatedErrorState) {
             ScaffoldMessenger.of(context)
-                .showSnackBar(Utils.showCustomSnackBar(toastErrorMessage));
+                .showSnackBar(Utils.showCustomSnackBar(snackBarErrorMessage));
+          } else if (state is ContactDeletedSuccessState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                Utils.showCustomSnackBar(snackBarDeleteSuccessMessage));
+            Navigator.pushNamed(context, homePath);
+          } else if (state is ContactDeletedErrorState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(Utils.showCustomSnackBar(snackBarErrorMessage));
           }
         },
         child: BlocBuilder<ContactCubit, ContactState>(
@@ -66,48 +92,45 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                   actions: [
                     MoreMenu(
-                      onPressed: () => print('delete'),
+                      onPressed: () => onTapDelete(contact.id),
                     )
                   ],
                 ),
-                body: Container(
-                  alignment: Alignment.center,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: CircleAvatar(
-                            backgroundColor: appSecondaryContainerColor,
-                            radius: 50,
-                            child: Text(
-                              state.contact.name[0].toUpperCase(),
-                              style: const TextStyle(fontSize: 40),
-                            ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: CircleAvatar(
+                          backgroundColor: appSecondaryContainerColor,
+                          radius: 50,
+                          child: Text(
+                            state.contact.name[0].toUpperCase(),
+                            style: const TextStyle(fontSize: 40),
                           ),
                         ),
-                        ContactForm(
-                          isReadOnly: isReadOnly,
-                          nameController: nameController,
-                          phoneNumberController: phoneNumberController,
-                          emailController: emailController,
-                          onPressedEdit: () => toggleIsReadOnly(),
-                          onPressedSave: () {
-                            Contact contactToUpdate = Contact(
-                                contact.id,
-                                nameController.text,
-                                emailController.text,
-                                phoneNumberController.text);
-
+                      ),
+                      ContactForm(
+                        formKey: formKey,
+                        isReadOnly: isReadOnly,
+                        nameController: nameController,
+                        phoneNumberController: phoneNumberController,
+                        emailController: emailController,
+                        onPressedEdit: () => toggleIsReadOnly(),
+                        onPressedSave: () {
+                          Contact contactToUpdate = Contact(
+                              contact.id,
+                              nameController.text,
+                              emailController.text,
+                              phoneNumberController.text);
+                          if (formKey.currentState!.validate()) {
                             toggleIsReadOnly();
-
                             contactCubit.updateContactById(contactToUpdate);
-                          },
-                          onPressedCancel: () => toggleIsReadOnly(),
-                        ),
-                      ],
-                    ),
+                          }
+                        },
+                        onPressedCancel: () => toggleIsReadOnly(),
+                      ),
+                    ],
                   ),
                 ),
               );

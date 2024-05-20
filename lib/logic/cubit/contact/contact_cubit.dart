@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_state.dart';
 
@@ -9,13 +8,6 @@ class ContactCubit extends Cubit<ContactState> {
   ContactCubit() : super(ContactInitialState());
 
   ContactRepository contactRepository = ContactRepository();
-
-  @override
-  void onChange(Change<ContactState> change) {
-    debugPrint('from: ${change.currentState}');
-    debugPrint('to: ${change.nextState}');
-    super.onChange(change);
-  }
 
   void setContact(Contact contact) {
     emit(ContactLoadingState());
@@ -45,8 +37,17 @@ class ContactCubit extends Cubit<ContactState> {
       await contactRepository.addNewContact(newContact);
       emit(ContactCreatedSuccessState());
     } catch (e) {
-      print(e);
       emit(ContactCreatedErrorState());
+    }
+  }
+
+  void deleteContactById(String contactId) async {
+    try {
+      emit(ContactLoadingState());
+      await contactRepository.deleteContactById(contactId);
+      emit(ContactDeletedSuccessState());
+    } catch (e) {
+      emit(ContactDeletedErrorState());
     }
   }
 }

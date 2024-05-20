@@ -6,6 +6,7 @@ import '../texts/contact_texts.dart';
 class ContactForm extends StatelessWidget {
   const ContactForm({
     super.key,
+    required this.formKey,
     required this.nameController,
     required this.phoneNumberController,
     required this.emailController,
@@ -15,6 +16,7 @@ class ContactForm extends StatelessWidget {
     required this.onPressedCancel,
   });
 
+  final GlobalKey<FormState> formKey;
   final TextEditingController nameController;
   final TextEditingController phoneNumberController;
   final TextEditingController emailController;
@@ -25,8 +27,6 @@ class ContactForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Form(
@@ -38,6 +38,15 @@ class ContactForm extends StatelessWidget {
               child: TextFormField(
                 controller: nameController,
                 readOnly: isReadOnly,
+                validator: (value) {
+                  if (!isReadOnly) {
+                    if (value!.isEmpty) {
+                      return noNameProvided;
+                    }
+                  }
+
+                  return null;
+                },
                 decoration: InputDecoration(
                   icon: const Icon(
                     Icons.person_2_outlined,
@@ -84,9 +93,7 @@ class ContactForm extends StatelessWidget {
                 isReadOnly
                     ? const SizedBox()
                     : TextButton(
-                        onPressed: () {
-                          onPressedEdit();
-                        },
+                        onPressed: onPressedCancel,
                         child: const Text(cancelBtnText),
                       ),
                 const SizedBox(

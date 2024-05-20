@@ -54,8 +54,15 @@ class ContactDataProvider {
         'email': contact.email,
         'uid': UserRepository.user.uid
       });
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-      print('contact created successfully');
+  Future deleteUserByID(String contactId) async {
+    try {
+      DocumentReference docRef = contactsRef.doc(contactId);
+      await docRef.delete();
     } catch (e) {
       rethrow;
     }

@@ -9,6 +9,7 @@ import 'package:nimbus_contacts/presentation/screens/home/texts/home_texts.dart'
 import 'package:nimbus_contacts/presentation/screens/home/widgets/home_body.dart';
 import 'package:nimbus_contacts/presentation/screens/new_contact/new_contact_dialog.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/utils/path_constants.dart';
 import 'package:nimbus_contacts/utils/utils.dart';
 
 import '../../../data/repositories/user_repository.dart';
@@ -32,12 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return BlocListener<ContactCubit, ContactState>(
       listener: (context, state) {
+        ScaffoldMessenger.of(context).clearSnackBars();
         if (state is ContactCreatedSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
-              Utils.showCustomSnackBar('You have added a new contact!'));
+              Utils.showCustomSnackBar(snackBarAddSuccessMessage));
         } else if (state is ContactCreatedErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(Utils.showCustomSnackBar(
-              'Something went wrong, please try again!'));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(Utils.showCustomSnackBar(snackBarAddErrorMessage));
         }
       },
       child: BlocBuilder<ContactListCubit, ContactListState>(
@@ -62,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onContactTap: (value) {
                   if (value != emptyContact) {
                     contactCubit.setContact(value);
-                    Navigator.pushNamed(context, '/contact');
+                    Navigator.pushNamed(context, contactPath);
                   }
                 },
               ),

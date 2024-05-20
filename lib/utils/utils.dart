@@ -11,7 +11,6 @@ class Utils {
           return AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              //height: 300,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,5 +128,100 @@ class Utils {
       content: Text(message),
       duration: const Duration(seconds: 3),
     );
+  }
+
+  static void showConfirmationDialog(
+      {required BuildContext context,
+      required IconData icon,
+      required String confirmationTitle,
+      required String confirmationDescription,
+      required Function() onTapConfirm}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: SizedBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        height: 90,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                          color: appPrimaryColor,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          children: [
+                            Icon(
+                              icon,
+                              color: appYellowColor,
+                              size: 32,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                                confirmationTitle,
+                                style: const TextStyle(
+                                  color: appYellowColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 30),
+                    child: Text(
+                      confirmationDescription,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: appPrimaryColor,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancel'),
+                        ),
+                        FilledButton(
+                          onPressed: onTapConfirm,
+                          child: const Text('Confirm'),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

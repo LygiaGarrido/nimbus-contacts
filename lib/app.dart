@@ -7,6 +7,7 @@ import 'package:nimbus_contacts/presentation/screens/contact/contact_screen.dart
 import 'package:nimbus_contacts/presentation/screens/home/home_screen.dart';
 import 'package:nimbus_contacts/presentation/screens/login/login.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/utils/path_constants.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,18 +19,18 @@ class MyApp extends StatelessWidget {
     final ContactCubit contactCubit = ContactCubit();
     return MaterialApp(
       title: 'Nimbus Contacts',
-      initialRoute: '/',
+      initialRoute: initialPath,
       routes: {
-        '/': (context) => MultiBlocProvider(providers: [
+        initialPath: (context) => MultiBlocProvider(providers: [
               BlocProvider.value(value: userCubit),
               BlocProvider.value(value: contactListCubit)
             ], child: const LoginScreen()),
-        '/home': (context) => MultiBlocProvider(providers: [
+        homePath: (context) => MultiBlocProvider(providers: [
               BlocProvider.value(value: userCubit),
               BlocProvider.value(value: contactListCubit),
               BlocProvider.value(value: contactCubit),
             ], child: const HomeScreen()),
-        '/contact': (context) => MultiBlocProvider(providers: [
+        contactPath: (context) => MultiBlocProvider(providers: [
               BlocProvider.value(value: userCubit),
               BlocProvider.value(value: contactListCubit),
               BlocProvider.value(value: contactCubit)

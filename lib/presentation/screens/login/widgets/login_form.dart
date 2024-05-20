@@ -106,12 +106,12 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               SizedBox(
-                // height: 30,
                 height: height < 670 ? 10 : height / 20,
               ),
               ElevatedButton(
-                  onPressed: widget.onSendButtonPressed,
-                  child: const Text(signInBtnText))
+                onPressed: widget.onSendButtonPressed,
+                child: const Text(signInBtnText),
+              )
             ],
           ),
         ),

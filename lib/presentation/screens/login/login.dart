@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimbus_contacts/data/repositories/user_repository.dart';
@@ -6,6 +5,7 @@ import 'package:nimbus_contacts/logic/cubit/contact/contact_list_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_state.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/utils/path_constants.dart';
 import 'package:nimbus_contacts/utils/utils.dart';
 
 import 'texts/texts.dart';
@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                   errorTitleText, errorDescriptionText);
             } else if (state is AuthenticatedUserState) {
               contactListCubit.getAllContacts(UserRepository.user.uid);
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushNamed(context, homePath);
             }
           },
           child: Align(
@@ -75,34 +75,5 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-void buscarContatos(String userUid) async {
-  try {
-    // Referência à coleção 'contacts'
-    CollectionReference contatosRef =
-        FirebaseFirestore.instance.collection('contacts');
-
-    // Obter os documentos da coleção 'contacts'
-    QuerySnapshot querySnapshot = await contatosRef
-        .where('uid', isEqualTo: userUid)
-        .orderBy('name')
-        .get();
-
-    // Iterar sobre os documentos e acessar seus dados
-    for (var doc in querySnapshot.docs) {
-      // Acessar os dados de cada documento
-      Map<String, dynamic>? dados = doc.data() as Map<String, dynamic>?;
-
-      // Exemplo de como acessar os valores de campos específicos
-      String nome = dados?['name'];
-      String telefone = dados?['phoneNumber'];
-
-      // Faça o que precisar com os dados
-      print('Nome: $nome, Telefone: $telefone');
-    }
-  } catch (e) {
-    print('Erro ao buscar contatos: $e');
   }
 }
