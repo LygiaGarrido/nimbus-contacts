@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nimbus_contacts/data/models/contact_model.dart';
+import 'package:nimbus_contacts/data/repositories/user_repository.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_cubit.dart';
+import 'package:nimbus_contacts/logic/cubit/contact/contact_list_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_state.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/texts/contact_texts.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/widgets/contact_form.dart';
@@ -35,6 +37,8 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     ContactCubit contactCubit = BlocProvider.of<ContactCubit>(context);
+    ContactListCubit contactListCubit =
+        BlocProvider.of<ContactListCubit>(context);
 
     void onTapDelete(String contactId) {
       Utils.showConfirmationDialog(
@@ -83,7 +87,10 @@ class _ContactScreenState extends State<ContactScreen> {
               return Scaffold(
                 appBar: AppBar(
                   leading: IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      contactListCubit.getAllContacts(UserRepository.user.uid);
+                      Navigator.pop(context);
+                    },
                     icon: const Icon(Icons.close, color: appPrimaryColor),
                   ),
                   title: const Text(
