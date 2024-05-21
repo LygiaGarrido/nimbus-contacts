@@ -16,4 +16,14 @@ class UserCubit extends Cubit<UserState> {
       emit(UserErrorState());
     }
   }
+
+  void addNewUser(String email, String password) async {
+    try {
+      emit(UserLoadingState());
+      await userRepository.addNewUser(email, password);
+      emit(NewUserState());
+    } catch (e) {
+      emit(UserErrorState());
+    }
+  }
 }

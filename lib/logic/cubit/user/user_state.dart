@@ -17,6 +17,11 @@ class AuthenticatedUserState extends UserState {
   List<Object> get props => [];
 }
 
+class NewUserState extends UserState {
+  @override
+  List<Object> get props => [];
+}
+
 class UserErrorState extends UserState {
   @override
   List<Object> get props => [];

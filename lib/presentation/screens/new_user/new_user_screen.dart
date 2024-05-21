@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nimbus_contacts/data/repositories/user_repository.dart';
-import 'package:nimbus_contacts/logic/cubit/contact/contact_list_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_state.dart';
+import 'package:nimbus_contacts/presentation/screens/new_user/texts/new_user_texts.dart';
+import 'package:nimbus_contacts/presentation/screens/new_user/widgets/new_user_form.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 import 'package:nimbus_contacts/utils/path_constants.dart';
 import 'package:nimbus_contacts/utils/utils.dart';
 
-import 'texts/texts.dart';
-import 'widgets/login_form.dart';
+import '../login/texts/texts.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class NewUserScreen extends StatelessWidget {
+  const NewUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +20,15 @@ class LoginScreen extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
 
     UserCubit userCubit = BlocProvider.of<UserCubit>(context);
-    ContactListCubit contactListCubit =
-        BlocProvider.of<ContactListCubit>(context);
 
-    void onLoginButtonClicked() {
+    void onSignUpButtonClicked() {
       if (formKey.currentState!.validate()) {
-        userCubit.login(emailController.text, passwordController.text);
+        userCubit.addNewUser(emailController.text, passwordController.text);
       }
     }
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
         backgroundColor: appPrimaryColor,
         body: BlocListener<UserCubit, UserState>(
           listener: (context, state) {
@@ -42,18 +38,38 @@ class LoginScreen extends StatelessWidget {
               Navigator.pop(context);
               Utils.showErrorDialog(context, Icons.warning_amber_rounded,
                   errorTitleText, errorDescriptionText);
-            } else if (state is AuthenticatedUserState) {
-              contactListCubit.getAllContacts(UserRepository.user.uid);
-              Navigator.pushNamed(context, homePath);
+            } else if (state is NewUserState) {
+              Navigator.pushNamed(context, initialPath);
             }
           },
           child: Align(
             alignment: Alignment.topCenter,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const SizedBox(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: appBackgroundColor,
+                        )),
+                    const Text(
+                      topPageText,
+                      style: TextStyle(
+                        color: appBackgroundColor,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                    )
+                  ],
+                ),
                 Expanded(
                   flex: 0,
                   child: Image.asset(
@@ -63,34 +79,14 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 0,
-                  child: LoginForm(
+                  child: NewUserForm(
                     formKey: formKey,
                     emailController: emailController,
                     passwordController: passwordController,
-                    onSendButtonPressed: () => onLoginButtonClicked(),
+                    onSignUpButtonPressed: () => onSignUpButtonClicked(),
                   ),
                 ),
-                Expanded(
-                  flex: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        joinUsText,
-                        style:
-                            TextStyle(color: appBackgroundColor, fontSize: 16),
-                      ),
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, newUserPath),
-                        child: const Text(
-                          signUpBtnText,
-                          style: TextStyle(color: appYellowColor),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                const SizedBox(),
               ],
             ),
           ),

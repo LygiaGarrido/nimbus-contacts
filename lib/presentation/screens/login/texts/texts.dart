@@ -14,3 +14,7 @@ const String errorTitleText = 'Something went wrong!';
 
 //---LOGO IMAGE PATH---//
 const String logoImagePath = 'assets/images/nimbus-logo.png';
+
+//---LOGO IMAGE PATH---//
+const String joinUsText = 'Not a member? Join us now!';
+const String signUpBtnText = 'Sign up';

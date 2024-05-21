@@ -13,4 +13,13 @@ class UserDataProvider {
       rethrow;
     }
   }
+
+  static Future addNewUser(String email, String password) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

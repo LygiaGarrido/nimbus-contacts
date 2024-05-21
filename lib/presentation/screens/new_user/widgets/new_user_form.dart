@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:email_validator/email_validator.dart';
 
-import '../texts/texts.dart';
+import '../texts/new_user_texts.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm(
+class NewUserForm extends StatefulWidget {
+  const NewUserForm(
       {Key? key,
       required this.formKey,
       required this.emailController,
       required this.passwordController,
-      required this.onSendButtonPressed})
+      required this.onSignUpButtonPressed})
       : super(key: key);
 
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
-  final Function() onSendButtonPressed;
+  final Function() onSignUpButtonPressed;
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<NewUserForm> createState() => _NewUserFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _NewUserFormState extends State<NewUserForm> {
   bool showPassword = false;
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -32,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: height / 3.1,
+      height: height / 3.2,
       width: width / 1.2,
       decoration: const BoxDecoration(
         color: appBackgroundColor,
@@ -53,12 +52,9 @@ class _LoginFormState extends State<LoginForm> {
                 textInputAction: TextInputAction.next,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return noEmailFormText;
+                    return noEmailText;
                   }
-                  final bool isEmailValid = EmailValidator.validate(value);
-                  if (!isEmailValid) {
-                    return invalidEmailFormText;
-                  }
+
                   return null;
                 },
                 onFieldSubmitted: (value) {
@@ -69,21 +65,21 @@ class _LoginFormState extends State<LoginForm> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: appPrimaryColor),
                   ),
-                  labelText: emailFormText,
+                  labelText: emailFormLabelText,
                 ),
               ),
               const SizedBox(
                 height: 30,
               ),
               TextFormField(
-                onFieldSubmitted: (value) => widget.onSendButtonPressed(),
+                onFieldSubmitted: (value) => widget.onSignUpButtonPressed(),
                 controller: widget.passwordController,
                 focusNode: passwordFocusNode,
                 obscureText: !showPassword,
                 keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return noPasswordFormText;
+                    return noPasswordText;
                   }
                   return null;
                 },
@@ -92,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: appPrimaryColor),
                   ),
-                  labelText: passwordFormText,
+                  labelText: passwordFormLabelText,
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -109,8 +105,8 @@ class _LoginFormState extends State<LoginForm> {
                 height: height < 670 ? 10 : height / 20,
               ),
               ElevatedButton(
-                onPressed: widget.onSendButtonPressed,
-                child: const Text(signInBtnText),
+                onPressed: widget.onSignUpButtonPressed,
+                child: const Text(joinBtnText),
               )
             ],
           ),

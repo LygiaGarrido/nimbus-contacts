@@ -12,4 +12,12 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future addNewUser(String email, String password) async {
+    try {
+      await UserDataProvider.addNewUser(email, password);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

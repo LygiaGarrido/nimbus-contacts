@@ -6,6 +6,7 @@ import 'package:nimbus_contacts/logic/cubit/user/user_cubit.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/contact_screen.dart';
 import 'package:nimbus_contacts/presentation/screens/home/home_screen.dart';
 import 'package:nimbus_contacts/presentation/screens/login/login.dart';
+import 'package:nimbus_contacts/presentation/screens/new_user/new_user_screen.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 import 'package:nimbus_contacts/utils/path_constants.dart';
 
@@ -25,6 +26,13 @@ class MyApp extends StatelessWidget {
               BlocProvider.value(value: userCubit),
               BlocProvider.value(value: contactListCubit)
             ], child: const LoginScreen()),
+        newUserPath: (context) => MultiBlocProvider(
+              providers: [
+                BlocProvider.value(value: userCubit),
+                BlocProvider.value(value: contactListCubit),
+              ],
+              child: const NewUserScreen(),
+            ),
         homePath: (context) => MultiBlocProvider(providers: [
               BlocProvider.value(value: userCubit),
               BlocProvider.value(value: contactListCubit),
