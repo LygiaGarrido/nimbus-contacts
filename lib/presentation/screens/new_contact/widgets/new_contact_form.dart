@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
+import '../../../../utils/widgets/dropdown_tag_menu.dart';
+
 class NewContactForm extends StatelessWidget {
   const NewContactForm({
     super.key,
@@ -9,11 +11,13 @@ class NewContactForm extends StatelessWidget {
     required this.emailController,
     required this.onPressedSave,
     required this.onPressedCancel,
+    required this.tagController,
   });
 
   final TextEditingController nameController;
   final TextEditingController phoneNumberController;
   final TextEditingController emailController;
+  final TextEditingController tagController;
 
   final void Function() onPressedCancel;
   final void Function() onPressedSave;
@@ -29,7 +33,7 @@ class NewContactForm extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              padding: const EdgeInsets.all(8),
               child: TextFormField(
                 controller: nameController,
                 textCapitalization: TextCapitalization.words,
@@ -43,7 +47,7 @@ class NewContactForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              padding: const EdgeInsets.all(8),
               child: TextFormField(
                 controller: phoneNumberController,
                 keyboardType: TextInputType.number,
@@ -57,7 +61,7 @@ class NewContactForm extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              padding: const EdgeInsets.all(8),
               child: TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -68,6 +72,25 @@ class NewContactForm extends StatelessWidget {
                     color: appPrimaryColor,
                   ),
                 ),
+                onTapOutside: (PointerDownEvent event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Icon(
+                    Icons.sell_outlined,
+                    color: appPrimaryColor,
+                  ),
+                  DropdownTagMenu(
+                    tagController: tagController,
+                  ),
+                  const SizedBox()
+                ],
               ),
             ),
             const SizedBox(

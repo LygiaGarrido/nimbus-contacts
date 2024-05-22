@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
@@ -54,7 +55,10 @@ class _NewUserFormState extends State<NewUserForm> {
                   if (value == null || value.isEmpty) {
                     return noEmailText;
                   }
-
+                  final bool isEmailValid = EmailValidator.validate(value);
+                  if (!isEmailValid) {
+                    return invalidEmailFormatText;
+                  }
                   return null;
                 },
                 onFieldSubmitted: (value) {
@@ -80,6 +84,8 @@ class _NewUserFormState extends State<NewUserForm> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return noPasswordText;
+                  } else if (value.length < 6) {
+                    return minimumLengthPasswordText;
                   }
                   return null;
                 },

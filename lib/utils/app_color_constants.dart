@@ -9,3 +9,7 @@ Color appSecondaryContainerColor =
     ColorScheme.fromSeed(seedColor: appPrimaryColor).secondaryContainer;
 Color appSecondaryColor =
     ColorScheme.fromSeed(seedColor: appPrimaryColor).secondary;
+
+Color? familyTagColor = Colors.purple[300];
+Color? friendsTagColor = Colors.pink[300];
+Color? workTagColor = Colors.blue[800];

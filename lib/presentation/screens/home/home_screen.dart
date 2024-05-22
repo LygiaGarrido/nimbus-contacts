@@ -7,6 +7,7 @@ import 'package:nimbus_contacts/logic/cubit/contact/contact_list_state.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_state.dart';
 import 'package:nimbus_contacts/presentation/screens/home/texts/home_texts.dart';
 import 'package:nimbus_contacts/presentation/screens/home/widgets/home_body.dart';
+import 'package:nimbus_contacts/presentation/screens/home/widgets/tag_filter_enum.dart';
 import 'package:nimbus_contacts/presentation/screens/new_contact/new_contact_dialog.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
 import 'package:nimbus_contacts/utils/path_constants.dart';
@@ -25,12 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Contact> allItems = [];
   List<Contact> items = [];
   final TextEditingController searchController = TextEditingController();
-  final Contact emptyContact = Contact('', emptyContactText, '', '');
+  final Contact emptyContact = Contact('', emptyContactText, '', '', '');
+  final Contact emptyTagContact = Contact('', emptyTagContactText, '', '', '');
 
   @override
   Widget build(BuildContext context) {
     ContactCubit contactCubit = BlocProvider.of<ContactCubit>(context);
-
+    ContactListCubit contactListCubit =
+        BlocProvider.of<ContactListCubit>(context);
     return BlocListener<ContactCubit, ContactState>(
       listener: (context, state) {
         ScaffoldMessenger.of(context).clearSnackBars();
@@ -42,50 +45,57 @@ class _HomeScreenState extends State<HomeScreen> {
               .showSnackBar(Utils.showCustomSnackBar(snackBarAddErrorMessage));
         }
       },
-      child: BlocBuilder<ContactListCubit, ContactListState>(
-        builder: (context, state) {
-          if (state is ContactListLoadingState) {
-            return Utils.showLoading();
-          } else if (state is ContactListLoadedState) {
-            allItems = state.contacts;
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: appPrimaryColor,
-                title: const Text(
-                  appBarTitle,
-                  style: TextStyle(color: appYellowColor),
-                ),
-                automaticallyImplyLeading: false,
-              ),
-              body: HomeBody(
-                searchController: searchController,
-                allContactsList: allItems,
-                searchedItemList: items.isEmpty ? allItems : items,
-                onContactTap: (value) {
-                  if (value != emptyContact) {
-                    contactCubit.setContact(value);
-                    Navigator.pushNamed(context, contactPath);
-                  }
-                },
-              ),
-              floatingActionButton: FloatingActionButton(
-                backgroundColor: appPrimaryColor,
-                onPressed: () => NewContactDialog.showNewContactDialog(context),
-                child: const Icon(
-                  Icons.person_add_alt_1_outlined,
-                  color: appYellowColor,
-                ),
-              ),
-            );
-          } else {
-            return const Text('Oops, something happened...');
-          }
+      child: RefreshIndicator(
+        onRefresh: () async {
+          await contactListCubit.getAllContacts(UserRepository.user.uid);
         },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: appPrimaryColor,
+            title: const Text(
+              appBarTitle,
+              style: TextStyle(color: appYellowColor),
+            ),
+            automaticallyImplyLeading: false,
+          ),
+          body: BlocBuilder<ContactListCubit, ContactListState>(
+            builder: (context, state) {
+              allItems = [];
+              if (state is ContactListLoadingState) {
+                return Utils.showLoading();
+              } else if (state is ContactListLoadedState) {
+                allItems = state.contacts;
+                return HomeBody(
+                  searchController: searchController,
+                  allContactsList: allItems,
+                  searchedItemList: items.isEmpty ? allItems : items,
+                  onContactTap: (value) {
+                    if (value != emptyContact) {
+                      contactCubit.setContact(value);
+                      Navigator.pushNamed(context, contactPath);
+                    }
+                  },
+                  onTagMenuPressed: (chosenTag) => searchByTag(chosenTag),
+                );
+              } else {
+                return const Text('Oops, something happened...');
+              }
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: appPrimaryColor,
+            onPressed: () => NewContactDialog.showNewContactDialog(context),
+            child: const Icon(
+              Icons.person_add_alt_1_outlined,
+              color: appYellowColor,
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  void search(String query) {
+  void searchByName(String query) {
     if (query.isEmpty) {
       setState(() {
         items = allItems;
@@ -93,7 +103,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       setState(() {
         items = allItems
-            .where((e) => e.name.toLowerCase().contains(query.toLowerCase()))
+            .where(
+                (item) => item.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
         if (items.isEmpty) {
           items.add(emptyContact);
@@ -102,8 +113,23 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void searchByTag(String tag) {
+    if (tag == TagsFilter.all.name) {
+      setState(() {
+        items = allItems;
+      });
+    } else {
+      setState(() {
+        items = allItems.where((item) => item.tag == tag).toList();
+        if (items.isEmpty) {
+          items.add(emptyTagContact);
+        }
+      });
+    }
+  }
+
   void queryListener() {
-    search(searchController.text);
+    searchByName(searchController.text);
   }
 
   @override

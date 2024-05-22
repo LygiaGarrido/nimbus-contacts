@@ -16,6 +16,7 @@ class NewContactDialog {
     TextEditingController nameController = TextEditingController();
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+    TextEditingController tagController = TextEditingController();
 
     ContactCubit contactCubit = BlocProvider.of<ContactCubit>(context);
     ContactListCubit contactListCubit =
@@ -37,12 +38,14 @@ class NewContactDialog {
                         nameController: nameController,
                         phoneNumberController: phoneNumberController,
                         emailController: emailController,
+                        tagController: tagController,
                         onPressedSave: () {
                           contactCubit.addNewContact(Contact(
                               '',
                               nameController.text,
                               emailController.text,
-                              phoneNumberController.text));
+                              phoneNumberController.text,
+                              tagController.text));
                           contactListCubit
                               .getAllContacts(UserRepository.user.uid);
                           Navigator.pop(context);

@@ -4,8 +4,12 @@ import '../../../../data/models/contact_model.dart';
 import '../texts/home_texts.dart';
 
 class ContactSearchBar extends StatelessWidget {
-  const ContactSearchBar(
-      {super.key, required this.itemList, required this.searchController});
+  const ContactSearchBar({
+    super.key,
+    required this.itemList,
+    required this.searchController,
+  });
+
   final List<Contact> itemList;
   final TextEditingController searchController;
   @override
@@ -15,7 +19,7 @@ class ContactSearchBar extends StatelessWidget {
       width: width / 1.1,
       child: SearchBar(
         padding: const MaterialStatePropertyAll<EdgeInsets>(
-          EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+          EdgeInsets.symmetric(vertical: 0, horizontal: 20),
         ),
         controller: searchController,
         leading: const Icon(

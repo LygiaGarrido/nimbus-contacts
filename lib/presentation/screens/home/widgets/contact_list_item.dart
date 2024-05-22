@@ -16,11 +16,26 @@ class ContactListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color? getAvatarColor(String? tag) {
+      switch (tag) {
+        case 'family':
+          return familyTagColor;
+        case 'friends':
+          return friendsTagColor;
+        case 'work':
+          return workTagColor;
+        default:
+          return appSecondaryColor;
+      }
+    }
+
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: appSecondaryColor,
+        backgroundColor: getAvatarColor(contact.tag),
         child: Text(
-          title == emptyContactText ? '!' : title[0].toUpperCase(),
+          title == emptyContactText || title == emptyTagContactText
+              ? '!'
+              : title[0].toUpperCase(),
           style: const TextStyle(color: appYellowColor),
         ),
       ),

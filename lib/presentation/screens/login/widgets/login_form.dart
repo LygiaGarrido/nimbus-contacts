@@ -84,6 +84,8 @@ class _LoginFormState extends State<LoginForm> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return noPasswordFormText;
+                  } else if (value.length < 6) {
+                    return minLengthPasswordFormText;
                   }
                   return null;
                 },

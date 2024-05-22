@@ -6,6 +6,8 @@ const String invalidEmailFormText =
     'Invalid email. Please, double check your email.';
 const String noEmailFormText = 'Please, type your email';
 const String noPasswordFormText = 'Please, type your password';
+const String minLengthPasswordFormText =
+    'The password must be at least 6 characters';
 const String signInBtnText = 'Sign in';
 
 //---LOGIN ALERT TEXTS---//

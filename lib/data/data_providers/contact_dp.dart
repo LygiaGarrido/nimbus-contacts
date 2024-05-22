@@ -34,7 +34,8 @@ class ContactDataProvider {
       await docRef.update({
         'name': contact.name,
         'phoneNumber': contact.phoneNumber,
-        'email': contact.email
+        'email': contact.email,
+        'tag': contact.tag,
       });
 
       DocumentSnapshot documentSnapshot = await docRef.get();
@@ -52,6 +53,7 @@ class ContactDataProvider {
         'name': contact.name,
         'phoneNumber': contact.phoneNumber,
         'email': contact.email,
+        'tag': contact.tag,
         'uid': UserRepository.user.uid
       });
     } catch (e) {

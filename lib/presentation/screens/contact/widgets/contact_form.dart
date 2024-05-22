@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/utils/widgets/dropdown_tag_menu.dart';
 
 import '../texts/contact_texts.dart';
 
@@ -10,6 +11,7 @@ class ContactForm extends StatelessWidget {
     required this.nameController,
     required this.phoneNumberController,
     required this.emailController,
+    required this.tagController,
     required this.isReadOnly,
     required this.onPressedEdit,
     required this.onPressedSave,
@@ -20,6 +22,7 @@ class ContactForm extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController phoneNumberController;
   final TextEditingController emailController;
+  final TextEditingController tagController;
   final bool isReadOnly;
   final void Function() onPressedEdit;
   final void Function() onPressedCancel;
@@ -44,7 +47,6 @@ class ContactForm extends StatelessWidget {
                       return noNameProvided;
                     }
                   }
-
                   return null;
                 },
                 decoration: InputDecoration(
@@ -82,8 +84,41 @@ class ContactForm extends StatelessWidget {
                   ),
                   filled: !isReadOnly,
                 ),
+                onTapOutside: (PointerDownEvent event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
               ),
             ),
+            !isReadOnly
+                ? Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(
+                          Icons.sell_outlined,
+                          color: appPrimaryColor,
+                        ),
+                        DropdownTagMenu(tagController: tagController),
+                        const SizedBox()
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                    child: TextFormField(
+                      controller: tagController,
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        icon: Icon(
+                          Icons.sell_outlined,
+                          color: appPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
             const SizedBox(
               height: 30,
             ),

@@ -84,6 +84,8 @@ class _ContactScreenState extends State<ContactScreen> {
                   TextEditingController(text: contact.phoneNumber);
               final TextEditingController emailController =
                   TextEditingController(text: contact.email);
+              final TextEditingController tagController =
+                  TextEditingController(text: contact.tag);
               return Scaffold(
                 appBar: AppBar(
                   leading: IconButton(
@@ -123,13 +125,15 @@ class _ContactScreenState extends State<ContactScreen> {
                         nameController: nameController,
                         phoneNumberController: phoneNumberController,
                         emailController: emailController,
+                        tagController: tagController,
                         onPressedEdit: () => toggleIsReadOnly(),
                         onPressedSave: () {
                           Contact contactToUpdate = Contact(
                               contact.id,
                               nameController.text,
                               emailController.text,
-                              phoneNumberController.text);
+                              phoneNumberController.text,
+                              tagController.text);
                           if (formKey.currentState!.validate()) {
                             toggleIsReadOnly();
                             contactCubit.updateContactById(contactToUpdate);
@@ -142,7 +146,27 @@ class _ContactScreenState extends State<ContactScreen> {
                 ),
               );
             }
-            return const SizedBox();
+            return Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  onPressed: () {
+                    contactListCubit.getAllContacts(UserRepository.user.uid);
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.close, color: appPrimaryColor),
+                ),
+                title: const Text(
+                  contactAppBarTitle,
+                  style: TextStyle(color: appPrimaryColor),
+                ),
+                actions: [
+                  MoreMenu(
+                    onPressed: () {},
+                  )
+                ],
+              ),
+              body: const Center(child: Text('Ops! Something went wrong!')),
+            );
           },
         ),
       ),
