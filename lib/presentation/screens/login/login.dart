@@ -4,10 +4,10 @@ import 'package:nimbus_contacts/data/repositories/user_repository.dart';
 import 'package:nimbus_contacts/logic/cubit/contact/contact_list_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_state.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/path_constants.dart';
-import 'package:nimbus_contacts/utils/utils.dart';
 
+import '../../utils/app_color_constants.dart';
+import '../../utils/path_constants.dart';
+import '../../utils/utils.dart';
 import 'texts/texts.dart';
 import 'widgets/login_form.dart';
 

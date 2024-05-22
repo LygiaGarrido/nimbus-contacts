@@ -7,8 +7,8 @@ import 'package:nimbus_contacts/presentation/screens/contact/contact_screen.dart
 import 'package:nimbus_contacts/presentation/screens/home/home_screen.dart';
 import 'package:nimbus_contacts/presentation/screens/login/login.dart';
 import 'package:nimbus_contacts/presentation/screens/new_user/new_user_screen.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/path_constants.dart';
+import 'package:nimbus_contacts/presentation/utils/app_color_constants.dart';
+import 'package:nimbus_contacts/presentation/utils/path_constants.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

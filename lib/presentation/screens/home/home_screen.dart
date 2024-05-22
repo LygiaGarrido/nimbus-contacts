@@ -9,11 +9,11 @@ import 'package:nimbus_contacts/presentation/screens/home/texts/home_texts.dart'
 import 'package:nimbus_contacts/presentation/screens/home/widgets/home_body.dart';
 import 'package:nimbus_contacts/presentation/screens/home/widgets/tag_filter_enum.dart';
 import 'package:nimbus_contacts/presentation/screens/new_contact/new_contact_dialog.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/path_constants.dart';
-import 'package:nimbus_contacts/utils/utils.dart';
 
 import '../../../data/repositories/user_repository.dart';
+import '../../utils/app_color_constants.dart';
+import '../../utils/path_constants.dart';
+import '../../utils/utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

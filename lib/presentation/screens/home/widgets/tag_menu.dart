@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/presentation/screens/home/widgets/tag_filter_enum.dart';
 
-import '../../../../utils/app_color_constants.dart';
+import '../../../utils/app_color_constants.dart';
 
 class TagMenu extends StatelessWidget {
   const TagMenu({super.key, required this.onPressed});

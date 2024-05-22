@@ -8,10 +8,10 @@ import 'package:nimbus_contacts/logic/cubit/contact/contact_state.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/texts/contact_texts.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/widgets/contact_form.dart';
 import 'package:nimbus_contacts/presentation/screens/contact/widgets/more_menu.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/path_constants.dart';
 
-import '../../../utils/utils.dart';
+import '../../utils/app_color_constants.dart';
+import '../../utils/path_constants.dart';
+import '../../utils/utils.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});

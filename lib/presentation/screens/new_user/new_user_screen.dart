@@ -4,10 +4,10 @@ import 'package:nimbus_contacts/logic/cubit/user/user_cubit.dart';
 import 'package:nimbus_contacts/logic/cubit/user/user_state.dart';
 import 'package:nimbus_contacts/presentation/screens/new_user/texts/new_user_texts.dart';
 import 'package:nimbus_contacts/presentation/screens/new_user/widgets/new_user_form.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/path_constants.dart';
-import 'package:nimbus_contacts/utils/utils.dart';
 
+import '../../utils/app_color_constants.dart';
+import '../../utils/path_constants.dart';
+import '../../utils/utils.dart';
 import '../login/texts/texts.dart';
 
 class NewUserScreen extends StatelessWidget {

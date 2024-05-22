@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
-import 'package:nimbus_contacts/utils/widgets/dropdown_tag_menu.dart';
 
+import '../../../utils/app_color_constants.dart';
+import '../../../utils/widgets/dropdown_tag_menu.dart';
 import '../texts/contact_texts.dart';
 
 class ContactForm extends StatelessWidget {

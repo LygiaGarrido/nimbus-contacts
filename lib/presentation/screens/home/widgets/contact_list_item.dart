@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nimbus_contacts/presentation/screens/home/texts/home_texts.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
 import '../../../../data/models/contact_model.dart';
+import '../../../utils/app_color_constants.dart';
 
 class ContactListItem extends StatelessWidget {
   const ContactListItem(

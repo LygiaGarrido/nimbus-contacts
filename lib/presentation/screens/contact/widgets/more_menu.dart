@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
+import '../../../utils/app_color_constants.dart';
 import '../texts/contact_texts.dart';
 
 class MoreMenu extends StatelessWidget {

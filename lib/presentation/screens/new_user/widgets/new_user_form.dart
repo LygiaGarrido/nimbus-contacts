@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:nimbus_contacts/utils/app_color_constants.dart';
 
+import '../../../utils/app_color_constants.dart';
 import '../texts/new_user_texts.dart';
 
 class NewUserForm extends StatefulWidget {
