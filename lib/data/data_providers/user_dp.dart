@@ -19,7 +19,6 @@ class UserDataProvider {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
     } catch (e) {
-      print(e);
       rethrow;
     }
   }

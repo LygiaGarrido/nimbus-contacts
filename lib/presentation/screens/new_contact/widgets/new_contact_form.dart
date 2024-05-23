@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/app_color_constants.dart';
 import '../../../utils/widgets/dropdown_tag_menu.dart';
+import '../texts/new_contact_texts.dart';
 
 class NewContactForm extends StatelessWidget {
   const NewContactForm({
@@ -38,7 +39,7 @@ class NewContactForm extends StatelessWidget {
                 controller: nameController,
                 textCapitalization: TextCapitalization.words,
                 decoration: const InputDecoration(
-                  labelText: 'Name',
+                  labelText: nameFormLabelText,
                   icon: Icon(
                     Icons.person_2_outlined,
                     color: appPrimaryColor,
@@ -52,7 +53,7 @@ class NewContactForm extends StatelessWidget {
                 controller: phoneNumberController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
-                  labelText: 'Phone Number',
+                  labelText: phoneFormLabelText,
                   icon: Icon(
                     Icons.phone,
                     color: appPrimaryColor,
@@ -66,7 +67,7 @@ class NewContactForm extends StatelessWidget {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
-                  labelText: 'Email',
+                  labelText: emailFormLabelText,
                   icon: Icon(
                     Icons.alternate_email,
                     color: appPrimaryColor,
@@ -103,13 +104,13 @@ class NewContactForm extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: onPressedCancel,
-                    child: const Text('Cancel'),
+                    child: const Text(cancelBtnText),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
                   FilledButton(
-                      onPressed: onPressedSave, child: const Text('Save'))
+                      onPressed: onPressedSave, child: const Text(saveBtnText))
                 ],
               ),
             )

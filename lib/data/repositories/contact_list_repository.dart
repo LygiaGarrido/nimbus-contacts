@@ -6,8 +6,13 @@ class ContactListRepository {
   ContactDataProvider contactDataProvider = ContactDataProvider();
 
   Future<List<Contact>> getAllContacts(String userUid) async {
-    List<Contact> contacts = await contactDataProvider.getAllContacts(userUid);
+    try {
+      List<Contact> contacts =
+          await contactDataProvider.getAllContacts(userUid);
 
-    return contacts;
+      return contacts;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

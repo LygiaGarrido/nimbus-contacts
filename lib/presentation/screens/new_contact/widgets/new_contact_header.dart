@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../utils/app_color_constants.dart';
+import '../texts/new_contact_texts.dart';
 
 class NewContactHeader extends StatelessWidget {
   const NewContactHeader({super.key});
@@ -19,7 +20,7 @@ class NewContactHeader extends StatelessWidget {
                 color: appPrimaryColor,
               )),
           const Text(
-            'New Contact',
+            newContactHeaderText,
             style: TextStyle(
                 color: appPrimaryColor,
                 fontSize: 18,

@@ -6,17 +6,30 @@ class ContactRepository {
   ContactDataProvider contactDataProvider = ContactDataProvider();
 
   Future<Contact> updateContactById(Contact contact) async {
-    var updatedContactData = await contactDataProvider.updateUserByID(contact);
-    Contact updatedContact = Contact.fromJson(updatedContactData, contact.id);
+    try {
+      var updatedContactData =
+          await contactDataProvider.updateUserByID(contact);
+      Contact updatedContact = Contact.fromJson(updatedContactData, contact.id);
 
-    return updatedContact;
+      return updatedContact;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future addNewContact(Contact contact) async {
-    await contactDataProvider.addNewContact(contact);
+    try {
+      await contactDataProvider.addNewContact(contact);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future deleteContactById(String contactId) async {
-    await contactDataProvider.deleteUserByID(contactId);
+    try {
+      await contactDataProvider.deleteUserByID(contactId);
+    } catch (e) {
+      rethrow;
+    }
   }
 }
