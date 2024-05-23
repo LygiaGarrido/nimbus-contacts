@@ -73,6 +73,7 @@ OR
 
 ## Demonstration Videos
 To see Nimbus Contacts in action, check out the following videos demonstrating various features of the application:
+(Please, note that you have to download each video to watch it!)
 
 - **Creating an Account**: [Watch Video](media/1_create_new_user.mp4)
 - **Login**: [Watch Video](media/2_login.mp4)
