@@ -70,6 +70,7 @@ OR
 6. **Explore Nimbus Contacts**:
     - Once the application is installed, it will automatically launch on the emulator.
     - Explore the features of Nimbus Contacts and test its functionality.
+    - You can try an already existent user (email: newuser@email.com password:test123) or create a new user :)
 
 ## Demonstration Videos
 To see Nimbus Contacts in action, check out the following videos demonstrating various features of the application:
